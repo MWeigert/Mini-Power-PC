@@ -1,19 +1,19 @@
 Informatik - Aufgabenserie 6
-Test
+
 ---------------------------------------A U F G A B E------------------------------------------------
 ---------------------------------M I N I   P O W E R   P C------------------------------------------
 
-	1. TEIL-----------------------------------------------------------------------------------------
+	1.TEIL-----------------------------------------------------------------------------------------
  	Schreiben Sie ein Programm in einer beliebigen Programmiersprache / Umgebung, das den in der
 	Vorlesung spezifierten "Mini-Power-PC" emuliert - d.h. alle Befehle des Befehlsatzes (s.h.
 	Anlage Befehlssatz) ausführt.
 	
 	Als Eingabe soll gelesen werden:
 	- Ein beliebiges mit dem Befehlssatz geschriebenes Programm, das ab Speicher 100 in den
-	  Speicher eingelesen wird (Der Op-Code des Programms kann als Binär-, Dezimal- oder Hex-Zahlen
-	  eingelesen werden).
-	- Die Parameter des Programms (Eingabewerte) ab Speicher 500 (Die Parameter des Programms können
-	  als Binär-, Dezimal- oder Hex-Zahlen eingelesen werden).
+	  Speicher eingelesen wird (Der Op-Code des Programms kann als Binär-, Dezimal- oder Hex-
+	  Zahlen eingelesen werden).
+	- Die Parameter des Programms (Eingabewerte) ab Speicher 500 (Die Parameter des Programms
+	  können als Binär-, Dezimal- oder Hex-Zahlen eingelesen werden).
 	
 	Als Ausgabe wird folgendes erwartet:
 	- Die aktuellen Zustände der Register
@@ -28,18 +28,21 @@ Test
 	  * Optional: alle Werte auch als Binär-Werte
 	- Die Anzahl der durchgeführten Befehle (zum Programmstart 0)
 	
-	Implementieren Sie einen "schnellen" und einen "slow" Modus, sowie optional einen "Step-Modus".
+	Implementieren Sie einen "schnellen" und einen "slow" Modus, sowie optional einen 
+	"Step-Modus".
 	
 	Schneller Modus:
 	Während des Programmablaufs erfolgt keine Ausgabe (keine Aktualisierung der Ausgabedaten);
 	diese werden erst am Programmende aktualisiert.
 	
 	Slow Modus:
-	Während des Programmablaufs wird nach Bearbeiten eines jeden Befehls die Ausgabe akutalisiert.
+	Während des Programmablaufs wird nach Bearbeiten eines jeden Befehls die Ausgabe 
+	akutalisiert.
 	
 	Step-Modus
-	Wie Slow Modus, jedoch wird das Programm nach Bearbeitung eines jeden Befehls unterbrochen und
-	wird erst nach einer Bestätigung durch den User (z.B. drücken einer Taste) wieder fortgesetzt.
+	Wie Slow Modus, jedoch wird das Programm nach Bearbeitung eines jeden Befehls unterbrochen
+	und	wird erst nach einer Bestätigung durch den User (z.B. drücken einer Taste) wieder fort-
+	gesetzt.
 	
 	2.TEIL------------------------------------------------------------------------------------------
 	Schreiben Sie ein Programm in der Maschinensprache des in der Vorlesung spezifizierten (ver-
@@ -49,13 +52,14 @@ Test
 	Die beiden 16-Bit Zahlen (im 2er-Komplement) sollen in die Speicher 500/5001 und 502/503
 	eingelesen werden.
 	
-	Die Ausgabe wird als 32-Bit Zahl (im 2er-Komplement) in die Speicher 504/505/506/507 geschrieben.
+	Die Ausgabe wird als 32-Bit Zahl (im 2er-Komplement) in die Speicher 504/505/506/507 ge-
+	schrieben.
 	
-	3. TEIL------------------------------------------------------------------------------------------
+	3.TEIL------------------------------------------------------------------------------------------
 	Verifizieren Sie Ihren Emulator und Ihr Programm, indem Sie folgende Multiplikationen
 	durchführen:
 	
-	* 15 x 27
-	* 0 x 23456
+	*    15 x 27
+	*     0 x 23456
 	* -1234 x 4321
-	* -222 x -333
+	*  -222 x -333
