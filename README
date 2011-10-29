@@ -3,7 +3,7 @@ Informatik - Aufgabenserie 6
 ---------------------------------------A U F G A B E------------------------------------------------
 ---------------------------------M I N I   P O W E R   P C------------------------------------------
 
-	1.TEIL-----------------------------------------------------------------------------------------
+	1.TEIL----------------------------------------------------------------------------------------------
  	Schreiben Sie ein Programm in einer beliebigen Programmiersprache / Umgebung, das den in der
 	Vorlesung spezifierten "Mini-Power-PC" emuliert - d.h. alle Befehle des Befehlsatzes (s.h.
 	Anlage Befehlssatz) ausführt.
@@ -41,13 +41,13 @@ Informatik - Aufgabenserie 6
 	
 	Step-Modus
 	Wie Slow Modus, jedoch wird das Programm nach Bearbeitung eines jeden Befehls unterbrochen
-	und	wird erst nach einer Bestätigung durch den User (z.B. drücken einer Taste) wieder fort-
-	gesetzt.
+	und	wird erst nach einer Bestätigung durch den User (z.B. drücken einer Taste) wieder
+	fortgesetzt.
 	
-	2.TEIL------------------------------------------------------------------------------------------
-	Schreiben Sie ein Programm in der Maschinensprache des in der Vorlesung spezifizierten (ver-
-	einfachten) "Mini-Power-PC" (Befehlssatz siehe Anlage), das zwei beliebige 16-Bit Zahlen mit- 
-	einander multipliziert.
+	2.TEIL-----------------------------------------------------------------------------------------------
+	Schreiben Sie ein Programm in der Maschinensprache des in der Vorlesung spezifizierten 
+	(vereinfachten) "Mini-Power-PC" (Befehlssatz siehe Anlage), das zwei beliebige 16-Bit 
+	Zahlen miteinander multipliziert.
 	
 	Die beiden 16-Bit Zahlen (im 2er-Komplement) sollen in die Speicher 500/5001 und 502/503
 	eingelesen werden.
@@ -55,7 +55,7 @@ Informatik - Aufgabenserie 6
 	Die Ausgabe wird als 32-Bit Zahl (im 2er-Komplement) in die Speicher 504/505/506/507 ge-
 	schrieben.
 	
-	3.TEIL------------------------------------------------------------------------------------------
+	3.TEIL-----------------------------------------------------------------------------------------------
 	Verifizieren Sie Ihren Emulator und Ihr Programm, indem Sie folgende Multiplikationen
 	durchführen:
 	
@@ -63,3 +63,9 @@ Informatik - Aufgabenserie 6
 	*     0 x 23456
 	* -1234 x 4321
 	*  -222 x -333
+	
+	=====================================================================================================
+	
+	FORTSCHRITT-INFORMATIONEN
+	28.10. GitHub eingerichtet und erste Planungen begonnen.
+	
