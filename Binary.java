@@ -32,7 +32,7 @@ public class Binary {
 		}
 		if ((Math.pow(2, bit)*-1) < dezValue && dezValue < (Math.pow(2, bit)-1)) {
 			zweiercomp = new HashMap<Integer, String>(this.bit);
-			intTo2erKomp(getBinaryValueAsString());
+			intTo2erKomp(binary);
 		} else {
 			System.out.println("Fehler beim generieren des 2er Komplements, Wert ist für angegebene" +
 			" Bittiefe zu gross.");
@@ -66,7 +66,7 @@ public class Binary {
 	public String getBinaryValueAsString() {
 		String txt = "";
 		for (int i = 0; i <= binary.size() - 1; i++) {
-			if (i % 8 == 0 ) {
+			if (i % 8 == 0 && i > 0 ) {
 				txt += " ";
 			}
 			txt += String.valueOf(binary.get(i));
@@ -81,7 +81,7 @@ public class Binary {
 	public String get2erKompValueAsString() {
 		String txt = "";
 		for (int i = 0; i <= zweiercomp.size() - 1; i++) {
-			if (i % 8 == 0) {
+			if (i % 8 == 0 && i > 0) {
 				txt += " ";
 			}
 			txt += zweiercomp.get(i);
@@ -101,19 +101,29 @@ public class Binary {
 	/**
 	 * Methode wandelt einen String welcher eine Binärzahl enthält in eine Binärzahl
 	 * in 2er Komplementär Darstellung um.
-	 * @param bin String welcher die zu umwandelnde Binärzahl enthält.
+	 * @param binary2 String welcher die zu umwandelnde Binärzahl enthält.
 	 */
-	public void intTo2erKomp (String bin) {
+	public void intTo2erKomp (Map<Integer, String> binary2) {
 		int merker = 1;
-		for (int i =  bin.length() - 1; i >0; i--) {
-			if (bin.charAt(i)=='1') {
+		for (int i =  binary2.size() - 1; i >0; i--) {
+			if (binary2.get(i).equals("1")) {
 				zweiercomp.put(i, "0");
 			} else {
-				zweiercomp.put(i, "1");
+				if (binary2.get(i).equals("0")) {
+					zweiercomp.put(i, "1");
+				}
 			}
 		}
-		for (int i= zweiercomp.size() - 1; i > 0; i--) {
-
+		for (int i= zweiercomp.size() ; i > 0; i--) {
+			if (merker == 1) {
+				if (zweiercomp.get(i).equals("1")) {
+					merker = 1;
+					zweiercomp.put(i, "0");
+				} else {
+					merker = 0;
+					zweiercomp.put(i, "1");
+				}
+			}
 		}
 		if (neg) {
 			zweiercomp.put(0, "1");
