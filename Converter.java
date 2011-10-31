@@ -49,9 +49,17 @@ public class Converter {
 	 */
 	public String binTo2erKomp (String str) {
 		String s = "";
-		for (int i = str.length() - 1; i >= 0; i--) {
-			if 
+		for (int i = 0; i <= str.length() - 1; i++) {
+			if (str.charAt(i)=='0') {
+				s += '1';
+			} else {
+				s += '0';
+			}
 		}
-		return s;
+		str = "";
+		for (int i = s.length() - 1; i >= 0; i--) {
+			
+		}
+		return str;
 	}
 }
