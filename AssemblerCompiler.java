@@ -30,21 +30,52 @@ public class AssemblerCompiler {
 			if (mne.equals("NOT")) mcode = "00000000 00000000";
 			break;
 		case 1:
-			mcode = "0001" + mne.substring(3) + "00 00000000";
+			mcode = "0001" + mne.substring(2) + "00 00000000";
 			break;
 		case 2:
-			if (mne.startsWith("OR")) mcode = "0000" + mne.substring(4) + "11 00000000";
-			if (mne.startsWith("BZ")) mcode = "0001" + mne.substring(4) + "10 00000000";
-			if (mne.startsWith("BC")) mcode = "0001" + mne.substring(4) + "11 00000000";
+			if (mne.startsWith("OR")) mcode = "0000" + mne.substring(3) + "11 00000000";
+			if (mne.startsWith("BZ")) mcode = "0001" + mne.substring(3) + "10 00000000";
+			if (mne.startsWith("BC")) mcode = "0001" + mne.substring(3) + "11 00000000";
 			if (mne.startsWith("BD")) {
-				Binary bin = new Binary(16, Integer.valueOf(mne.substring(4)));
+				Binary bin = new Binary(16, Integer.valueOf(mne.substring(3)));
 				mcode = "001000" + bin.getBinaryValueAsString().substring(6);
 			}
 			break;
 		case 3:
-			if (mne.startsWith("CLR")) mcode = "0000" + mne.substring(5) + "10 10000000";
-			if (mne.startsWith("ADD")) mcode = "0000" + mne.substring(5) + "11 10000000";
-			if (mne.startsWith("AND")) mcode = "0000" + mne.substring(5) + "10 00000000";
+			if (mne.startsWith("CLR")) mcode = "0000" + mne.substring(4) + "10 10000000";
+			if (mne.startsWith("ADD")) mcode = "0000" + mne.substring(4) + "11 10000000";
+			if (mne.startsWith("AND")) mcode = "0000" + mne.substring(4) + "10 00000000";
+			if (mne.startsWith("BNZ")) mcode = "0001" + mne.substring(4) + "01 00000000";
+			if (mne.startsWith("BZD")) {
+				Binary bin = new Binary(16, Integer.valueOf(mne.substring(4)));
+				mcode = "001100" + bin.getBinaryValueAsString().substring(6);
+			}
+			if (mne.startsWith("BCD")) {
+				Binary bin = new Binary(16, Integer.valueOf(mne.substring(5)));
+				mcode = "001110" + bin.getBinaryValueAsString().substring(6);
+			}
+			break;
+		case 4:
+			if (mne.startsWith("ADDD")) {
+				Binary bin  = new Binary(16, Integer.valueOf(mne.substring(6)));
+				char vz = '0';
+				if (bin.isNegative()) vz = '1';
+				mcode = "1" + vz + bin.get2erKompValueAsString().substring(2);
+			}
+			if (mne.startsWith("LWDD")) {
+				int p = mne.indexOf("#");
+				Binary bin = new Binary(16, Integer.valueOf(mne.substring(p + 1)));
+				mcode = "0100" + mne.substring(5, 7) + bin.getBinaryValueAsString().substring(6);
+			}
+			if (mne.startsWith("SWDD")) {
+				int q = mne.indexOf("#");
+				Binary bin = new Binary(16, Integer.valueOf(mne.substring(q + 1)));
+				mcode = "0110" + mne.substring(5, 6) + bin.getBinaryValueAsString().substring(6);
+			}
+			if (mne.startsWith("BNZD")) {
+				Binary bin = new Binary(16, Integer.valueOf(mne.substring(6)));
+				mcode = "001010" + bin.getBinaryValueAsString().substring(6);
+			}
 			break;
 		default:
 			System.out.println("Fehler beim compilen von: " + mne);

@@ -41,7 +41,7 @@ Informatik - Aufgabenserie 6
 	
 	Step-Modus
 	Wie Slow Modus, jedoch wird das Programm nach Bearbeitung eines jeden Befehls unterbrochen
-	und	wird erst nach einer Bestätigung durch den User (z.B. drücken einer Taste) wieder
+	und wird erst nach einer Bestätigung durch den User (z.B. drücken einer Taste) wieder
 	fortgesetzt.
 	
 	2.TEIL-----------------------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ Informatik - Aufgabenserie 6
 	29.10. MW - Erste Klassen und erstes Testfile programmiert. (Converter; Memory)
 	30.10. MW - Weitere Konvertierungen in die Klasse Converter.java eingefügt.
 	31.10. MW - Converter wird erst einmal nicht weiterentwickelt -> neue Klasse Binary, welche
-				alle funktionalitäten beninhalten wird um mit Binärzahlen im Projekt zu 
-				arbeiten, entwickelt.
-	03.11. MW - AssemblerCompiler angefangen zu implementieren.
+			alle funktionalitäten beninhalten wird um mit Binärzahlen im Projekt zu 
+			arbeiten, entwickelt.
+	03.11. MW - AssemblerCompiler implementiert.
 	 
