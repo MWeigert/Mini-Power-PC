@@ -23,13 +23,13 @@ public class Binary {
 	public Binary(int bit, int val) {
 		this.bit = bit;
 		dezValue = val;
-		if (this.bit % 8 == 0) {
+//		if (this.bit % 8 == 0) {
 			binary = new HashMap<Integer, String>(this.bit);
 			intToBinary(val);
-		} else {
-			System.out.println("Fehler beim generieren der Binärzahl, es muss ein vielfaches" +
-			"von 8 als Bittiefe angegeben werden.");
-		}
+//		} else {
+//			System.out.println("Fehler beim generieren der Binärzahl, es muss ein vielfaches" +
+//			"von 8 als Bittiefe angegeben werden.");
+//		}
 		if ((Math.pow(2, bit)*-1) < dezValue && dezValue < (Math.pow(2, bit)-1)) {
 			zweiercomp = new HashMap<Integer, String>(this.bit);
 			intTo2erKomp(binary);
@@ -61,9 +61,23 @@ public class Binary {
 
 	/**
 	 * Methode welche einen String aus den einzelnen Elementen der Binary Map liefert.
+	 * Ohne Formatierung zur Internen Weiterverarbeitung.
 	 * @return String mit der Binärzahl. 
 	 */
-	public String getBinaryValueAsString() {
+	public String getBinaryValueAsStringIntern() {
+		String txt = "";
+		for (int i = 0; i <= binary.size() - 1; i++) {
+			txt += String.valueOf(binary.get(i));
+		}
+		return txt;
+	}
+	
+	/**
+	 * Methode welche einen String aus den einzelnen Elementen der Binary Map liefert.
+	 * Formatiert, damit man immer 8 Bit a Block sieht.
+	 * @return String mit der Binärzahl. 
+	 */	
+	public String getBinaryValueAsStringExtern() {
 		String txt = "";
 		for (int i = 0; i <= binary.size() - 1; i++) {
 			if (i % 8 == 0 && i > 0 ) {
@@ -71,7 +85,7 @@ public class Binary {
 			}
 			txt += String.valueOf(binary.get(i));
 		}
-		return txt;
+		return txt;	
 	}
 
 	/**

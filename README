@@ -71,7 +71,15 @@ Informatik - Aufgabenserie 6
 	29.10. MW - Erste Klassen und erstes Testfile programmiert. (Converter; Memory)
 	30.10. MW - Weitere Konvertierungen in die Klasse Converter.java eingefügt.
 	31.10. MW - Converter wird erst einmal nicht weiterentwickelt -> neue Klasse Binary, welche
-			alle funktionalitäten beninhalten wird um mit Binärzahlen im Projekt zu 
-			arbeiten, entwickelt.
+                alle funktionalitäten beninhalten wird um mit Binärzahlen im Projekt zu 
+                arbeiten, entwickelt.
 	03.11. MW - AssemblerCompiler implementiert.
-	 
+	04.11. MW - Funktionalitäten für folgende Klassen (weiter) entwickelt: Register, CPU und Memory
+	          - Memory kann nun flushen; Werte einzelner Zellen Binär & Dezimal ausgeben und
+	            den Wert (als Binärzahl) einzelner Zellen setzen (Grösse: 1 KiB).
+	          - Register können flushen; Werte setzen/zurückgeben (Binär). Register setzen ihren Wert
+	            im Constructor zufällig.
+	          - CPU hat ein Befehlsregister, einen Befehlszähler, ein Akkumulator, drei Register, 
+	            ein Carry-Bit, ein RAM (1 KiB) und einen internen Counter.
+	          - CPU kann nun eine Statusmeldung auf der Console ausgeben.
+	          - BUGFIX: Converter rechnet nun korrekt Binärzahlen in Dezimalzahlen um.

@@ -38,7 +38,7 @@ public class AssemblerCompiler {
 			if (mne.startsWith("BC")) mcode = "0001" + mne.substring(3) + "11 00000000";
 			if (mne.startsWith("BD")) {
 				Binary bin = new Binary(16, Integer.valueOf(mne.substring(3)));
-				mcode = "001000" + bin.getBinaryValueAsString().substring(6);
+				mcode = "001000" + bin.getBinaryValueAsStringExtern().substring(6);
 			}
 			break;
 		case 3:
@@ -48,11 +48,11 @@ public class AssemblerCompiler {
 			if (mne.startsWith("BNZ")) mcode = "0001" + mne.substring(4) + "01 00000000";
 			if (mne.startsWith("BZD")) {
 				Binary bin = new Binary(16, Integer.valueOf(mne.substring(4)));
-				mcode = "001100" + bin.getBinaryValueAsString().substring(6);
+				mcode = "001100" + bin.getBinaryValueAsStringExtern().substring(6);
 			}
 			if (mne.startsWith("BCD")) {
 				Binary bin = new Binary(16, Integer.valueOf(mne.substring(5)));
-				mcode = "001110" + bin.getBinaryValueAsString().substring(6);
+				mcode = "001110" + bin.getBinaryValueAsStringExtern().substring(6);
 			}
 			break;
 		case 4:
@@ -65,16 +65,16 @@ public class AssemblerCompiler {
 			if (mne.startsWith("LWDD")) {
 				int p = mne.indexOf("#");
 				Binary bin = new Binary(16, Integer.valueOf(mne.substring(p + 1)));
-				mcode = "0100" + mne.substring(5, 7) + bin.getBinaryValueAsString().substring(6);
+				mcode = "0100" + mne.substring(5, 7) + bin.getBinaryValueAsStringExtern().substring(6);
 			}
 			if (mne.startsWith("SWDD")) {
 				int q = mne.indexOf("#");
 				Binary bin = new Binary(16, Integer.valueOf(mne.substring(q + 1)));
-				mcode = "0110" + mne.substring(5, 6) + bin.getBinaryValueAsString().substring(6);
+				mcode = "0110" + mne.substring(5, 6) + bin.getBinaryValueAsStringExtern().substring(6);
 			}
 			if (mne.startsWith("BNZD")) {
 				Binary bin = new Binary(16, Integer.valueOf(mne.substring(6)));
-				mcode = "001010" + bin.getBinaryValueAsString().substring(6);
+				mcode = "001010" + bin.getBinaryValueAsStringExtern().substring(6);
 			}
 			break;
 		default:
@@ -83,5 +83,4 @@ public class AssemblerCompiler {
 		}
 		return mcode;
 	}
-
 }

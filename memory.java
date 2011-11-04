@@ -1,7 +1,7 @@
 /**
  * 		Klasse welche den Speicher des Mini-Power-PC Projekts simuliert.
- * 		Es wird eine HashMap verwendet welche die Speicheradressen 001
- * 		bis 600 simuliert.
+ * 		Es wird eine HashMap verwendet welche die Speicheradressen 00000000 00000000
+ * 		bis 11111111 11111111 (1 KiB) simuliert.
  */
 package info.mini.power.pc;
 
@@ -14,53 +14,50 @@ import java.util.Map;
  */
 public class Memory {
 
-	private Map<Integer, Integer> mem;
+	private Map<String, String> mem;
 
 	public Memory () {
-		mem = new HashMap<Integer, Integer>();
+		mem = new HashMap<String, String>();
 	}
 
 	/**
 	 *  Methode welche den kompletten Speicher des Mini-Power-PC flusht.
 	 */
 	public void flushMemory () {
-		for (int i=1; i<601; i++) {
-			mem.put(i, 0);
+		for (int i=0; i<1024; i++) {
+			Binary bin = new Binary(10, i);
+			mem.put(bin.getBinaryValueAsStringIntern(), "00000000");
 		}
-
 	}
 
 	/** 
-	 *	Methode welche den Wert einer Speicheradresse als Wert in einem beliebigen Zahlensystem liefert.
+	 *	Methode welche den Wert einer Speicheradresse liefert.
 	 *
-	 *	@param adr Integer welche die Adresse der angefragten Speicherzelle enthält.
-	 *	@param xxx Integer Basis des Ausgabezahlensystems.
-	 * 	@return String welcher den Wert der Speicheradresse im Format des Ausgabezahlensystem beinhaltet.
+	 *	@param adr String welcher die Adresse (Binärzahl) der angefragten Speicherzelle enthält.
+	 * 	@return String welcher den Wert der Speicheradresse als Binärzahl beinhaltet.
 	 */
-	public String getXXXMemAdressValue (int adr, int xxx) {
-		Converter conv = new Converter();
-		String str = "";
-		str = conv.intToXXX(mem.get(adr), xxx);
-		return str;
+	public String getMemAdressValue (String adr) {
+		return mem.get(adr);
 	}
 
-	/** 
+	/** 			
 	 *  Methode welche den Wert einer Speicheradresse als Wert im Dezimalsystem liefert.
 	 * 
-	 * 	@param adr Integer welche die Adresse der angefragten Speicherzelle enthält.
-	 * 	@return String welcher den Wert der Speicheradresse als Dezimal Wert beinhaltet. 
+	 * 	@param adr String welche die Binär-Adresse der angefragten Speicherzelle enthält.
+	 * 	@return Integer welcher den Wert der Speicheradresse als Dezimal Wert beinhaltet. 
 	 */
-	public String getDezimalMemAdressValue (int adr) {
-		return String.valueOf(mem.get(adr));
+	public int getDezimalMemAdressValue (String adr) {
+		Converter conv = new Converter();
+		return conv.binToDez(mem.get(adr));
 	}
 
 	/**
 	 * Methode welche den Wert einer Speicherzelle setzt.
 	 * 
-	 * @param adr Integer welche die Adresse der entsprechenden Speicherzelle angibt.
-	 * @param val Integer mit dem Wert der entsprechenden Speicherzelle.
+	 * @param adr String welcher die Adresse (Binärzahl) der entsprechenden Speicherzelle angibt.
+	 * @param val String mit dem Binär-Wert der entsprechenden Speicherzelle.
 	 */
-	public void setMemoryValue (int adr, int val) {
+	public void setMemoryValue (String adr, String val) {
 		mem.put(adr, val);
 	}
 }
