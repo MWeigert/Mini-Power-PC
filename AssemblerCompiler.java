@@ -60,7 +60,7 @@ public class AssemblerCompiler {
 				Binary bin  = new Binary(16, Integer.valueOf(mne.substring(6)));
 				char vz = '0';
 				if (bin.isNegative()) vz = '1';
-				mcode = "1" + vz + bin.get2erKompValueAsString().substring(2);
+				mcode = "1" + vz + bin.get2erKompValueAsStringIntern().substring(2);
 			}
 			if (mne.startsWith("LWDD")) {
 				int p = mne.indexOf("#");

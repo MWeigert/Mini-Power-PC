@@ -90,14 +90,28 @@ public class Binary {
 
 	/**
 	 * Methode welche einen String aus den einzelnen Elementen der Zweiercomp Map liefert.
+	 * Formatiert, damit man immer 8 Bit a Block sieht.
 	 * @return String mit der Zweier Komplement Zahl.
 	 */
-	public String get2erKompValueAsString() {
+	public String get2erKompValueAsStringExtern() {
 		String txt = "";
 		for (int i = 0; i <= zweiercomp.size() - 1; i++) {
 			if (i % 8 == 0 && i > 0) {
 				txt += " ";
 			}
+			txt += zweiercomp.get(i);
+		}
+		return txt;
+	}
+
+	/**
+	 * Methode welche einen String aus den einzelnen Elementen der Zweiercomp Map liefert.
+	 * Ohne Formatierung zur Internen Weiterverarbeitung.
+	 * @return String mit der Zweier Komplement Zahl.
+	 */
+	public String get2erKompValueAsStringIntern() {
+		String txt = "";
+		for (int i = 0; i <= zweiercomp.size() - 1; i++) {
 			txt += zweiercomp.get(i);
 		}
 		return txt;

@@ -83,3 +83,11 @@ Informatik - Aufgabenserie 6
 	            ein Carry-Bit, ein RAM (1 KiB) und einen internen Counter.
 	          - CPU kann nun eine Statusmeldung auf der Console ausgeben.
 	          - BUGFIX: Converter rechnet nun korrekt Binärzahlen in Dezimalzahlen um.
+    05.11. MW - Binary: Kann nun Binärzahlen und 2erKomplemt mit und ohne Formatierung zurückgeben.
+              - NEUE KLASSE: UserInput
+              - UserInput: liest zwei Integer ein und schreibt Sie an die Speicheradressen 500 bis 503
+    06.11. MW - CPU kann nun den UserInput aufrufen
+              - CPU kann nun ein "Reset" durchführen
+              - CPU liefert nun den Wert des Befehlszählers (sowohl Binär als auch Dezimal)
+              - CPU hat nun erweiterte Statusmeldungen (Aufgaben Konform)
+              - Register können nun auch ihre Werte "formatiert" (Byte per Byte) zurückgeben.

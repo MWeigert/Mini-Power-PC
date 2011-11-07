@@ -35,6 +35,21 @@ public class Register {
 	}
 	
 	/**
+	 * Methode welche den Wert des Registers formatiert (Byte per Byte) zurückliefert.
+	 * @return String welcher den gespeicherten Wert als "formatierte" Binärzahl enthält.
+	 */
+	public String getRegisterValueExtern() {
+		String extern = "";
+		for (int i = 0; i <= 15; i++) {
+			if (i % 8 == 0 && i > 0 ) {
+				extern += " ";
+			}
+			extern += value.charAt(i);
+		}
+		return extern;
+	}
+	
+	/**
 	 * Methode welche den Binärwert des Registers setzt.
 	 * @param str String welcher den Binärwert enthält welcher in diesem Register gesetzt werden
 	 * 			  soll.
