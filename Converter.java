@@ -26,4 +26,9 @@ public class Converter {
 		}
 		return val;
 	}
+	
+	public String formatBinary (String str) {
+		String fstr = "";
+		return fstr;
+	}
 }
