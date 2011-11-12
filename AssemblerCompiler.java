@@ -37,7 +37,7 @@ public class AssemblerCompiler {
 			if (mne.startsWith("BZ")) mcode = "0001" + mne.substring(3) + "10 00000000";
 			if (mne.startsWith("BC")) mcode = "0001" + mne.substring(3) + "11 00000000";
 			if (mne.startsWith("BD")) {
-				Binary bin = new Binary(16, Integer.valueOf(mne.substring(3)));
+				Binary bin = new Binary(16, Integer.valueOf(mne.substring(3)), false);
 				mcode = "001000" + bin.getBinaryValueAsStringExtern().substring(6);
 			}
 			break;
@@ -47,33 +47,33 @@ public class AssemblerCompiler {
 			if (mne.startsWith("AND")) mcode = "0000" + mne.substring(4) + "10 00000000";
 			if (mne.startsWith("BNZ")) mcode = "0001" + mne.substring(4) + "01 00000000";
 			if (mne.startsWith("BZD")) {
-				Binary bin = new Binary(16, Integer.valueOf(mne.substring(4)));
+				Binary bin = new Binary(16, Integer.valueOf(mne.substring(4)), false);
 				mcode = "001100" + bin.getBinaryValueAsStringExtern().substring(6);
 			}
 			if (mne.startsWith("BCD")) {
-				Binary bin = new Binary(16, Integer.valueOf(mne.substring(5)));
+				Binary bin = new Binary(16, Integer.valueOf(mne.substring(5)), false);
 				mcode = "001110" + bin.getBinaryValueAsStringExtern().substring(6);
 			}
 			break;
 		case 4:
 			if (mne.startsWith("ADDD")) {
-				Binary bin  = new Binary(16, Integer.valueOf(mne.substring(6)));
+				Binary bin  = new Binary(16, Integer.valueOf(mne.substring(6)), true);
 				char vz = '0';
 				if (bin.isNegative()) vz = '1';
 				mcode = "1" + vz + bin.get2erKompValueAsStringIntern().substring(2);
 			}
 			if (mne.startsWith("LWDD")) {
 				int p = mne.indexOf("#");
-				Binary bin = new Binary(16, Integer.valueOf(mne.substring(p + 1)));
+				Binary bin = new Binary(16, Integer.valueOf(mne.substring(p + 1)), false);
 				mcode = "0100" + mne.substring(5, 7) + bin.getBinaryValueAsStringExtern().substring(6);
 			}
 			if (mne.startsWith("SWDD")) {
 				int q = mne.indexOf("#");
-				Binary bin = new Binary(16, Integer.valueOf(mne.substring(q + 1)));
+				Binary bin = new Binary(16, Integer.valueOf(mne.substring(q + 1)), false);
 				mcode = "0110" + mne.substring(5, 6) + bin.getBinaryValueAsStringExtern().substring(6);
 			}
 			if (mne.startsWith("BNZD")) {
-				Binary bin = new Binary(16, Integer.valueOf(mne.substring(6)));
+				Binary bin = new Binary(16, Integer.valueOf(mne.substring(6)), false);
 				mcode = "001010" + bin.getBinaryValueAsStringExtern().substring(6);
 			}
 			break;

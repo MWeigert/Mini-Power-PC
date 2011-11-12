@@ -113,21 +113,21 @@ public class CentralProcessingUnit {
 		System.out.println("********************************************");
 		String merker = getBcountAsString();
 		if (conv.binToDez(merker) < 105) {
-			merker = new Binary(16, 100).getBinaryValueAsStringIntern();
+			merker = new Binary(16, 100, false).getBinaryValueAsStringIntern();
 		} else {
-			merker = new Binary(16, conv.binToDez(merker) - 5).getBinaryValueAsStringIntern();
+			merker = new Binary(16, conv.binToDez(merker) - 5, false).getBinaryValueAsStringIntern();
 		}
 		int max = conv.binToDez(merker) + 15;
 		for (int i = conv.binToDez(merker); i <= max; i++) {
-			System.out.println("     Memory " + i + ": " +ram.getMemAdressValue(new Binary(16, i).getBinaryValueAsStringExtern()) +
-					" ¦ " + conv.binToDez(ram.getMemAdressValue(new Binary(16, i).getBinaryValueAsStringIntern())));
+			System.out.println("     Memory " + i + ": " +ram.getMemAdressValue(new Binary(16, i, false).getBinaryValueAsStringExtern()) +
+					" ¦ " + conv.binToDez(ram.getMemAdressValue(new Binary(16, i, false).getBinaryValueAsStringIntern())));
 		}
 		System.out.println("********************************************");
 		System.out.println("*************Memory 500 bis 529************");
 		System.out.println("********************************************");
-		for (int i = 500; i < 530; i++) {
-			System.out.println("     Memory "+ i + ": " + ram.getMemAdressValue(new Binary(16, i).getBinaryValueAsStringIntern()) +
-					" ¦ " +	conv.binToDez(ram.getMemAdressValue(new Binary(16, i).getBinaryValueAsStringIntern())));
+		for (int i = 500; i < 530; i+=2) {
+			System.out.println("     Memory "+ i + "/" + (i+1) + ": " + ram.getMemAdressValueWord(new Binary(16, i, false).getBinaryValueAsStringIntern()) +
+					" ¦ " +	conv.binToDez(ram.getMemAdressValueWord(new Binary(16, i, false).getBinaryValueAsStringIntern())));
 		}
 	}
 }

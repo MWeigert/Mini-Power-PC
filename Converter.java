@@ -17,7 +17,7 @@ public class Converter {
 	 */
 	public int binToDez (String str) {
 		int val = 0;
-		if (str != null) {
+		if (str != null && !str.equals("undefined")) {
 			int max = str.length() - 1;
 			for (int i = str.length() - 1; i >= 0; i--) {
 				double x = Math.pow(2, i);
@@ -29,6 +29,12 @@ public class Converter {
 	
 	public String formatBinary (String str) {
 		String fstr = "";
+		for (int i = 0; i <= str.length() - 1; i++) {
+			if (i % 8 == 0 && i > 0 ) {
+				fstr += " ";
+			}
+			fstr += String.valueOf(str.charAt(i));
+		}
 		return fstr;
 	}
 }

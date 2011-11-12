@@ -25,7 +25,7 @@ public class Memory {
 	 */
 	public void flushMemory () {
 		for (int i=0; i<1024; i++) {
-			Binary bin = new Binary(10, i);
+			Binary bin = new Binary(10, i, false);
 			mem.put(bin.getBinaryValueAsStringIntern(), "00000000");
 		}
 	}
@@ -38,6 +38,23 @@ public class Memory {
 	 */
 	public String getMemAdressValue (String adr) {
 		return mem.get(adr);
+	}
+
+	/** 
+	 *	Methode welche den Wert eines Wortes einer Speicheradresse liefert.
+	 *
+	 *	@param adr String welcher die Adresse (Binärzahl) der angefragten Speicherzelle enthält.
+	 * 	@return String welcher den Wort-Wert der Speicheradresse als Binärzahl beinhaltet.
+	 */
+	public String getMemAdressValueWord (String adr) {
+		Converter conv = new Converter();
+		String next = new Binary(16, conv.binToDez(adr) + 1, false).getBinaryValueAsStringIntern();
+		if (mem.get(adr)==null || mem.get(next)==null ) {
+			return "undefined";
+		}
+		else {
+			return mem.get(adr) + mem.get(next);
+		}
 	}
 
 	/** 			

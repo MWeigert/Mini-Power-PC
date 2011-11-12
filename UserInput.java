@@ -42,16 +42,17 @@ public class UserInput {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Binary ba = new Binary(16, a);
-		mem.setMemoryValue(new Binary(16, 500).getBinaryValueAsStringIntern(), 
-				ba.get2erKompValueAsStringIntern().substring(0, 7));
-		mem.setMemoryValue(new Binary(16, 501).getBinaryValueAsStringIntern(), 
-				ba.get2erKompValueAsStringIntern().substring(8, 15));
-		Binary bb = new Binary(16, b);
-		mem.setMemoryValue(new Binary(16, 502).getBinaryValueAsStringIntern(), 
-				bb.get2erKompValueAsStringIntern().substring(0, 7));
-		mem.setMemoryValue(new Binary(16, 503).getBinaryValueAsStringIntern(), 
-				bb.get2erKompValueAsStringIntern().substring(8, 15));
+		Binary ba = new Binary(16, a, true);
+		mem.setMemoryValue(new Binary(16, 500, false).getBinaryValueAsStringIntern(), 
+				ba.get2erKompValueAsStringIntern().substring(0, 8));
+		mem.setMemoryValue(new Binary(16, 501, false).getBinaryValueAsStringIntern(), 
+				ba.get2erKompValueAsStringIntern().substring(8, 16));
+		
+		Binary bb = new Binary(16, b, true);
+		mem.setMemoryValue(new Binary(16, 502, false).getBinaryValueAsStringIntern(), 
+				bb.get2erKompValueAsStringIntern().substring(0, 8));
+		mem.setMemoryValue(new Binary(16, 503, false).getBinaryValueAsStringIntern(), 
+				bb.get2erKompValueAsStringIntern().substring(8, 16));
 		return mem;
 	}
 }

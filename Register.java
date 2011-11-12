@@ -40,12 +40,8 @@ public class Register {
 	 */
 	public String getRegisterValueExtern() {
 		String extern = "";
-		for (int i = 0; i <= 15; i++) {
-			if (i % 8 == 0 && i > 0 ) {
-				extern += " ";
-			}
-			extern += value.charAt(i);
-		}
+		Converter conv = new Converter();
+		extern  = conv.formatBinary(getRegisterValue());
 		return extern;
 	}
 	

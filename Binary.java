@@ -17,25 +17,33 @@ public class Binary {
 	Map<Integer, String> zweiercomp;
 	int bit;
 	boolean neg;
+	boolean signed;
 	int dezValue;
 
 
-	public Binary(int bit, int val) {
+	public Binary(int bit, int val, boolean signed) {
 		this.bit = bit;
+		this.signed = signed;
 		dezValue = val;
-//		if (this.bit % 8 == 0) {
-			binary = new HashMap<Integer, String>(this.bit);
-			intToBinary(val);
-//		} else {
-//			System.out.println("Fehler beim generieren der Binärzahl, es muss ein vielfaches" +
-//			"von 8 als Bittiefe angegeben werden.");
-//		}
-		if ((Math.pow(2, bit)*-1) < dezValue && dezValue < (Math.pow(2, bit)-1)) {
-			zweiercomp = new HashMap<Integer, String>(this.bit);
-			intTo2erKomp(binary);
-		} else {
-			System.out.println("Fehler beim generieren des 2er Komplements, Wert ist für angegebene" +
-			" Bittiefe zu gross.");
+		//		if (this.bit % 8 == 0) {
+		binary = new HashMap<Integer, String>(this.bit);
+		intToBinary(dezValue);
+		//		} else {
+		//			System.out.println("Fehler beim generieren der Binärzahl, es muss ein vielfaches" +
+		//			"von 8 als Bittiefe angegeben werden.");
+		//		}
+		if (signed) {
+			if ((Math.pow(2, bit-1)*-1) < dezValue && dezValue < (Math.pow(2, bit-1)-1)) {
+				zweiercomp = new HashMap<Integer, String>(this.bit);
+				if (dezValue < 0) {
+					intTo2erKomp(binary);
+				} else {
+					zweiercomp = binary;
+				}
+			} else {
+				System.out.println("Fehler beim generieren des 2er Komplements, Wert ist für angegebene" +
+						" Bittiefe zu gross. Bit: " + bit + " Val: " + val );
+			}
 		}
 	}
 
@@ -71,7 +79,7 @@ public class Binary {
 		}
 		return txt;
 	}
-	
+
 	/**
 	 * Methode welche einen String aus den einzelnen Elementen der Binary Map liefert.
 	 * Formatiert, damit man immer 8 Bit a Block sieht.
@@ -79,12 +87,8 @@ public class Binary {
 	 */	
 	public String getBinaryValueAsStringExtern() {
 		String txt = "";
-		for (int i = 0; i <= binary.size() - 1; i++) {
-			if (i % 8 == 0 && i > 0 ) {
-				txt += " ";
-			}
-			txt += String.valueOf(binary.get(i));
-		}
+		Converter conv = new Converter();
+		txt = conv.formatBinary(getBinaryValueAsStringIntern());
 		return txt;	
 	}
 
@@ -95,12 +99,8 @@ public class Binary {
 	 */
 	public String get2erKompValueAsStringExtern() {
 		String txt = "";
-		for (int i = 0; i <= zweiercomp.size() - 1; i++) {
-			if (i % 8 == 0 && i > 0) {
-				txt += " ";
-			}
-			txt += zweiercomp.get(i);
-		}
+		Converter conv = new Converter();
+		txt = conv.formatBinary(get2erKompValueAsStringIntern());
 		return txt;
 	}
 
@@ -111,8 +111,13 @@ public class Binary {
 	 */
 	public String get2erKompValueAsStringIntern() {
 		String txt = "";
+		if (signed) {
 		for (int i = 0; i <= zweiercomp.size() - 1; i++) {
 			txt += zweiercomp.get(i);
+		}
+		
+		} else {
+			System.out.println("Es wird eine signed Ausgabe von einer unsigned Variable verlangt.");
 		}
 		return txt;
 	}
