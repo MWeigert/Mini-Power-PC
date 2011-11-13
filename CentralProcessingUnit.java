@@ -23,7 +23,7 @@ package info.mini.power.pc;
 public class CentralProcessingUnit {
 
 	Register breg = new Register();
-	String bcount = "0000000001100100";
+	Register bcount = new Register();
 	Register akku = new Register();
 	Register reg1 = new Register();
 	Register reg2 = new Register();
@@ -44,7 +44,7 @@ public class CentralProcessingUnit {
 	 */
 	public void initSystem() {
 		breg.flushRegister();
-		bcount = "0000000001100100";
+		bcount.setRegisterValue("0000000001100100");
 		akku.flushRegister();
 		reg1.flushRegister();
 		reg2.flushRegister();
@@ -67,7 +67,7 @@ public class CentralProcessingUnit {
 	 * @return Integer mit dem Wert des Befehlcounters 
 	 */
 	public int getBcountAsInt() {
-		return new Converter().binToDez(bcount);
+		return new Converter().binToDez(bcount.getRegisterValue());
 	}
 	
 	
@@ -76,7 +76,7 @@ public class CentralProcessingUnit {
 	 * @return String welcher den Binär Wert des Befehlcounters enthält.
 	 */
 	public String getBcountAsString() {
-		return bcount;
+		return bcount.getRegisterValue();
 	}
 	/**
 	 * Methode welche den internen Counter zurückgibt.
@@ -106,7 +106,7 @@ public class CentralProcessingUnit {
 		System.out.println("     Register 2: " + reg2.getRegisterValueExtern() + " ¦ " + conv.binToDez(reg2.getRegisterValue()));
 		System.out.println("     Register 3: " + reg3.getRegisterValueExtern() + " ¦ " + conv.binToDez(reg3.getRegisterValue()));
 		System.out.println("********************************************");
-		System.out.println("  Befehlszähler: " + bcount + " ¦ " + conv.binToDez(bcount));
+		System.out.println("  Befehlszähler: " + bcount.getRegisterValueExtern() + " ¦ " + conv.binToDez(bcount.getRegisterValue()));
 		System.out.println("      Carry Bit: " + cbit);
 		System.out.println("********************************************");
 		System.out.println("***************Befehlsspeicher**************");
@@ -123,11 +123,16 @@ public class CentralProcessingUnit {
 					" ¦ " + conv.binToDez(ram.getMemAdressValue(new Binary(16, i, false).getBinaryValueAsStringIntern())));
 		}
 		System.out.println("********************************************");
-		System.out.println("*************Memory 500 bis 529************");
+		System.out.println("*************Memory 500 bis 529*************");
 		System.out.println("********************************************");
 		for (int i = 500; i < 530; i+=2) {
-			System.out.println("     Memory "+ i + "/" + (i+1) + ": " + ram.getMemAdressValueWord(new Binary(16, i, false).getBinaryValueAsStringIntern()) +
-					" ¦ " +	conv.binToDez(ram.getMemAdressValueWord(new Binary(16, i, false).getBinaryValueAsStringIntern())));
+			String out = conv.formatBinary(ram.getMemAdressValueWord(new Binary(16, i, false).getBinaryValueAsStringIntern()));
+			int value = 0;
+			if (out.charAt(0) == '1') {
+				value = conv.kompToInt(ram.getMemAdressValueWord(new Binary(16, i, false).getBinaryValueAsStringIntern()));
+			} else value = conv.binToDez(ram.getMemAdressValueWord(new Binary(16, i, false).getBinaryValueAsStringIntern()));
+			System.out.println("     Memory "+ i + "/" + (i+1) + ": " + out +
+					" ¦ " +	value);
 		}
 	}
 }

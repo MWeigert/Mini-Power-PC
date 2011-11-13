@@ -91,3 +91,11 @@ Informatik - Aufgabenserie 6
               - CPU liefert nun den Wert des Befehlszählers (sowohl Binär als auch Dezimal)
               - CPU hat nun erweiterte Statusmeldungen (Aufgaben Konform)
               - Register können nun auch ihre Werte "formatiert" (Byte per Byte) zurückgeben.
+    12.11. MW - Converter kann Binärzahlen nun "formatiert" (Byte weise) ausgeben.
+              - Die CPU gibt nun den Datenspeicher Wort weise aus (16 Bit).
+              - BUGFIX: Das 2er Komplement wird nun korrekt berechnet.
+    13.11. MW - CPU zeigt nun die Dezimalwerte des Datenspeichers (2er Komplement) korrekt an.
+              - Converter kann nun auch das 2er Komplement wieder ins Dezimalsystem umrechnen.
+              - Der Befehlszähler ist nun auch ein Register.
+              - GUI_OpenFileDialog implementiert. Diese lässt ein Assembler Programm auswählen.
+              - Loader implementiert.

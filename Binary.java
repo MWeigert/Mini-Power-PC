@@ -36,7 +36,7 @@ public class Binary {
 			if ((Math.pow(2, bit-1)*-1) < dezValue && dezValue < (Math.pow(2, bit-1)-1)) {
 				zweiercomp = new HashMap<Integer, String>(this.bit);
 				if (dezValue < 0) {
-					intTo2erKomp(binary);
+					binTo2erKomp(binary);
 				} else {
 					zweiercomp = binary;
 				}
@@ -52,7 +52,6 @@ public class Binary {
 	 * es sich um einen negativen Wert handeln, so wird der Betrag umgewandelt und ein flag
 	 * gesetzt.
 	 * @param val Integer welche den Wert beinhaltet welcher umgewandelt werden soll.
-	 * @return String welcher den umgewandelten Wert als String zurückgibt.
 	 */
 	public void intToBinary (int val) {
 		if (val < 0) {
@@ -136,7 +135,7 @@ public class Binary {
 	 * in 2er Komplementär Darstellung um.
 	 * @param binary2 String welcher die zu umwandelnde Binärzahl enthält.
 	 */
-	public void intTo2erKomp (Map<Integer, String> binary2) {
+	public void binTo2erKomp (Map<Integer, String> binary2) {
 		int merker = 1;
 		for (int i =  binary2.size() - 1; i >0; i--) {
 			if (binary2.get(i).equals("1")) {
@@ -163,5 +162,13 @@ public class Binary {
 		} else {
 			zweiercomp.put(0, "0");
 		}
+	}
+	
+	/**
+	 * Methode liefert ein True zurück wenn es sich um eine Zahl im 2er Komplement handelt
+	 * @return TRUE wenn Binärzahl im 2er Komplement vorliegt.
+	 */
+	public boolean isSigned(){
+		return signed;
 	}
 }

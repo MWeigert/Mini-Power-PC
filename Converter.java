@@ -26,7 +26,48 @@ public class Converter {
 		}
 		return val;
 	}
-	
+
+	/**
+	 * Methode welche eine Binärzahl, welche in 2er Komplementdarstellung vorliegt in eine Dezimalzahl umwandelt.
+	 * @param str STRING welcher die Zahl in 2er Kompelementdarstellung beinhaltet.
+	 * @return INTEGER mit dem Wert der Übergebenen 2er Komplement Zahl.
+	 */
+	public int kompToInt(String str) {
+		int value = 0;
+		String bin ="";
+		if (str.charAt(0) == '1') {
+			str = str.substring(1);
+			for (int i = 0; i <= str.length() - 1; i++) {
+				if (str.charAt(i) == '1') bin += "0";
+				else bin += "1";
+			}
+			int merker = 1;
+			str = "";
+			for (int i = bin.length() - 1; i >= 0; i--) {
+				if (bin.charAt(i) == '0') {
+					if (merker == 1) {
+						str += "1";
+						merker = 0;
+					}  else str += "0";
+				} else {
+					if (merker == 1) str += "0";
+					else str += "1";
+				}
+			}
+			bin = "";
+			for (int i = str.length() - 1; i >= 0; i--) {
+				bin += str.charAt(i);
+			}
+			value = binToDez(bin) * (-1);
+		} else value = binToDez(str.substring(1));
+		return value;
+	}
+
+	/**
+	 * Methode welche eine Binärzahl "formatiert" (d.h. Byteweise) ausgibt. 
+	 * @param str STRING welcher die umzuwandelte Binärzahl enthält. 
+	 * @return STRING Byte weise formatierte Binärzahl.
+	 */
 	public String formatBinary (String str) {
 		String fstr = "";
 		for (int i = 0; i <= str.length() - 1; i++) {

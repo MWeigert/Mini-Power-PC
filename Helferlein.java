@@ -1,8 +1,11 @@
 package info.mini.power.pc;
 
+import java.io.FileNotFoundException;
+
 public class Helferlein {
 
-	/**
+	/** Klasse welche die verschiedenen Funktionalitäten der einzelnen Klassen/Methoden
+	 *  testet.
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -31,12 +34,21 @@ public class Helferlein {
 //		}
 //		System.out.println();
 //		System.out.println(new Converter().binToDez("01100100"));
-		CentralProcessingUnit cpu = new CentralProcessingUnit();
-		cpu.statusOutput();
-		cpu.initSystem();
-		cpu.increaseCounter();
-		cpu.waitForUserInput();
-		cpu.statusOutput();
+//		CentralProcessingUnit cpu = new CentralProcessingUnit();
+//		cpu.statusOutput();
+//		cpu.initSystem();
+//		cpu.increaseCounter();
+//		cpu.waitForUserInput();
+//		cpu.statusOutput();
+		GUI_OpenFileDialog fd = new GUI_OpenFileDialog();
+		System.out.println(fd.getChoosedFile());
+		Loader loader = new Loader();
+		try {
+			loader.loadFileInMemory(fd.getChoosedFile());
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
