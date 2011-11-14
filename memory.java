@@ -50,7 +50,7 @@ public class Memory {
 		Converter conv = new Converter();
 		String next = new Binary(16, conv.binToDez(adr) + 1, false).getBinaryValueAsStringIntern();
 		if (mem.get(adr)==null || mem.get(next)==null ) {
-			return "undefined";
+			return "undef";
 		}
 		else {
 			return mem.get(adr) + mem.get(next);

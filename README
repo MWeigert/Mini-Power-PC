@@ -100,3 +100,8 @@ Informatik - Aufgabenserie 6
               - GUI_OpenFileDialog implementiert. Diese lässt ein Assembler Programm auswählen.
               - Loader implementiert.
     14.11. MW - BUGFIX: Compiler compiliert nun den Befehl NOT korrekt.
+              - CPU gibt nun den Programspeicher Wort weise aus (16 Bit).
+              - CPU hat Methode welche mittels Loader aus einem auswählbaren Textfile den Program
+                Code als Maschinencode in den Programspeicher lädt.
+              - BUGFIX: Compiler weitere Bugs bei der Umwandlung in Maschinencode entfernt.
+              - Converter kann nun Maschinencode in Mnemonic übersetzen.

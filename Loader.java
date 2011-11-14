@@ -36,11 +36,8 @@ public class Loader {
 			while ((str = reader.readLine()) != null) {
 				i++;
 				mcode = compiler.compileMnemonic(str);
-				System.out.println(str);
-				System.out.println("Adresse : " + adr + " Code: " + mcode.substring(0, 8));
 				mem.setMemoryValue(new Binary(16, adr, false).getBinaryValueAsStringIntern(), mcode.substring(0, 8));
 				adr++;
-				System.out.println("Adresse : " + adr + " Code: " + mcode.substring(8));
 				mem.setMemoryValue(new Binary(16, adr, false).getBinaryValueAsStringIntern(), mcode.substring(8));
 				adr++;
 			}

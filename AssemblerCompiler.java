@@ -37,7 +37,7 @@ public class AssemblerCompiler {
 			if (mne.startsWith("BZ")) mcode = "0001" + mne.substring(3) + "1000000000";
 			if (mne.startsWith("BC")) mcode = "0001" + mne.substring(3) + "1100000000";
 			if (mne.startsWith("BD")) {
-				Binary bin = new Binary(16, Integer.valueOf(mne.substring(3)), false);
+				Binary bin = new Binary(16, Integer.valueOf(mne.substring(4)), false);
 				mcode = "001000" + bin.getBinaryValueAsStringExtern().substring(6);
 			}
 			break;
@@ -47,7 +47,7 @@ public class AssemblerCompiler {
 			if (mne.startsWith("AND")) mcode = "0000" + mne.substring(4) + "1000000000";
 			if (mne.startsWith("BNZ")) mcode = "0001" + mne.substring(4) + "0100000000";
 			if (mne.startsWith("BZD")) {
-				Binary bin = new Binary(16, Integer.valueOf(mne.substring(4)), false);
+				Binary bin = new Binary(16, Integer.valueOf(mne.substring(5)), false);
 				mcode = "001100" + bin.getBinaryValueAsStringIntern().substring(6);
 			}
 			if (mne.startsWith("BCD")) {

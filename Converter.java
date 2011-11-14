@@ -17,7 +17,7 @@ public class Converter {
 	 */
 	public int binToDez (String str) {
 		int val = 0;
-		if (str != null && !str.equals("undefined")) {
+		if (str != null && !str.equals("undef")) {
 			int max = str.length() - 1;
 			for (int i = str.length() - 1; i >= 0; i--) {
 				double x = Math.pow(2, i);
@@ -78,19 +78,98 @@ public class Converter {
 		}
 		return fstr;
 	}
-	
+
+	/**
+	 * Methode welche genau das Gegenteil des Assembler Compilers macht und aus einem MAschinencode
+	 * wieder das passende Mnemonic erstellt.
+	 * @param mcode STRING welcher den MaschinenCode welcher umgewandelt werden soll enthält.
+	 * @return STRING mit dem Mnemonic.
+	 */
 	public String mcToMnemonic( String mcode) {
-		int x = mcode.indexOf("1");
-		int value = 0;
-		String mnemonic = "";
-		switch (x) {
-		case 0:
-			value = new Converter().kompToInt(mcode.substring(1));
-			mnemonic = "ADDD #"+ value;
-			break;
-		default:
-			System.out.println("Fehler bei der Umwandlung von " + mcode + " in Mnemonics.");
-			break;
+		String mnemonic = "Speicherbereich leer";
+		if (!mcode.equals("undef")){
+			int x = mcode.indexOf("1");
+			int value = 0;
+			switch (x) {
+			case 0:
+				value = new Converter().kompToInt(mcode.substring(1));
+				mnemonic = "02 ADDD #"+ value;
+				break;
+			case 1:
+				value = new Converter().binToDez(mcode.substring(6));
+				if (mcode.charAt(2) == '0') {
+					mnemonic = "05 LWDD " + mcode.substring(4, 6) + ", #" + value;
+				} else {
+					mnemonic = "06 SWDD " + mcode.substring(4, 6) + ", #" + value;
+				}
+				break;
+			case 2:
+				value = new Converter().binToDez(mcode.substring(6));
+				if (mcode.charAt(3) == '0') {
+					if (mcode.charAt(4) == '0') {
+						mnemonic = "21 BD #" + value;
+					} else mnemonic = "19 BNZD #" + value;
+				} else {
+					if (mcode.charAt(4) == '0') {
+						mnemonic = "18 BZD #" + value;
+					}  else mnemonic = "20 BCD #" + value;
+				}
+				break;
+			case 3:
+				if (mcode.charAt(6) == '0') {
+					if (mcode.charAt(7) == '0') {
+						mnemonic = "17 B " + mcode.substring(4, 6);
+					} else mnemonic = "15 BNZ " + mcode.substring(4, 6);
+				} else {
+					if (mcode.charAt(7) == '0') {
+						mnemonic = "14 BZ " + mcode.substring(4, 6);
+					} else mnemonic = "16 BC " + mcode.substring(4, 6);
+				}
+				break;
+			case 8:
+				mnemonic = "13 NOT";
+				break;
+			default:
+				String sub = mcode.substring(6, 9);
+				x = sub.indexOf("0");
+				switch (x) {
+				case -1:
+					mnemonic = "01 ADD " + mcode.substring(4, 6);
+					break;
+				case 1:
+					if (sub.charAt(2) == '0') {
+						mnemonic = "11 AND " + mcode.substring(4, 6);
+					} else mnemonic = "00 CLR " + mcode.substring(4, 6);
+					break;
+				case 2:
+					mnemonic = "12 OR " + mcode.substring(4, 6);
+					break;
+				default:
+					sub = mcode.substring(4, 8);
+					x = sub.indexOf("1");
+					switch (x) {
+					case 0: 
+						if (sub.charAt(1) == '1') {
+							mnemonic = "10 SLL";
+						} else {
+							if (sub.charAt(3) == '0') mnemonic = "08 SLA";
+							else mnemonic = "09 SRL";
+						} 
+						break;
+					case 1:
+						if (sub.charAt(3) == '0') mnemonic = "04 DEC";
+						else mnemonic = "07 SRA";
+						break;
+					case 3:
+						mnemonic = "03 INC";
+						break;
+					default:
+						System.out.println("Fehler bei der Umwandlung von " + mcode + " in Mnemonics.");
+						break;
+					}
+				}
+				break;
+			}
 		}
 		return mnemonic;
 	}
