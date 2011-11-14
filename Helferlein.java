@@ -34,21 +34,31 @@ public class Helferlein {
 //		}
 //		System.out.println();
 //		System.out.println(new Converter().binToDez("01100100"));
-//		CentralProcessingUnit cpu = new CentralProcessingUnit();
+		CentralProcessingUnit cpu = new CentralProcessingUnit();
+//		cpu.executeNextCommand();
 //		cpu.statusOutput();
-//		cpu.initSystem();
+		cpu.initSystem();
 //		cpu.increaseCounter();
 //		cpu.waitForUserInput();
-//		cpu.statusOutput();
-		GUI_OpenFileDialog fd = new GUI_OpenFileDialog();
-		System.out.println(fd.getChoosedFile());
-		Loader loader = new Loader();
+//		cpu.executeNextCommand();
+		cpu.statusOutput();
+		cpu.increaseCounter();
 		try {
-			loader.loadFileInMemory(fd.getChoosedFile());
+			cpu.loadProgramToMemory();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		cpu.statusOutput();
+//		GUI_OpenFileDialog fd = new GUI_OpenFileDialog();
+//		System.out.println(fd.getChoosedFile());
+//		Loader loader = new Loader();
+//		try {
+//			loader.loadFileInMemory(fd.getChoosedFile());
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 }

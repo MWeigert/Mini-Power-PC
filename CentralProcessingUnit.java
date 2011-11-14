@@ -16,6 +16,8 @@
  */
 package info.mini.power.pc;
 
+import java.io.FileNotFoundException;
+
 /**
  * @author Mathias Weigert & Miro Ljubicic
  *
@@ -38,7 +40,7 @@ public class CentralProcessingUnit {
 	public void increaseCounter() {
 		counter++;
 	}
-	
+
 	/**
 	 * Methode welche alle Werte auf Start stellt und die Register komplett leert.
 	 */
@@ -53,7 +55,7 @@ public class CentralProcessingUnit {
 		ram.flushMemory();
 		counter = 0;
 	}
-	
+
 	/**
 	 * Methode welche den Wert des Carry Bits setzt.
 	 * @param bol Boolean Wert auf welchen das Carry Bit gesetzt werden soll. 
@@ -69,8 +71,7 @@ public class CentralProcessingUnit {
 	public int getBcountAsInt() {
 		return new Converter().binToDez(bcount.getRegisterValue());
 	}
-	
-	
+
 	/**
 	 * Methode welche den Wert des Befehlszählers als String (Binärzahl) zurück liefert.
 	 * @return String welcher den Binär Wert des Befehlcounters enthält.
@@ -78,6 +79,7 @@ public class CentralProcessingUnit {
 	public String getBcountAsString() {
 		return bcount.getRegisterValue();
 	}
+
 	/**
 	 * Methode welche den internen Counter zurückgibt.
 	 * @return Integer welche den Wert des internen Counters beinhaltet.
@@ -85,14 +87,52 @@ public class CentralProcessingUnit {
 	public int getCounter() {
 		return counter;
 	}
+
+	/**
+	 * Methode welche den Benutzer ein Assembler Program auswählen lässt und dieses in den 
+	 * Programspeicher lädt.
+	 * @throws FileNotFoundException
+	 */
+	public void loadProgramToMemory() throws FileNotFoundException {
+		GUI_OpenFileDialog fd = new GUI_OpenFileDialog();
+		Loader loader = new Loader();
+		Memory progMemory = new Memory();
+		progMemory = loader.loadFileInMemory(fd.getChoosedFile());
+		for (int i = 100; i < 500; i++) {
+			String binAdr = new Binary(16, i, false).getBinaryValueAsStringIntern();
+			ram.setMemoryValue(binAdr, progMemory.getMemAdressValue(binAdr));
+		}
+	}
 	
+	/**
+	 * Methode welche den UserInput aufruft und die Zahlen in den Hauptspeicher schreibt.
+	 */
 	public void waitForUserInput() {
 		UserInput uinput = new UserInput();
 		ram = uinput.userInput(ram);
 	}
-	
-	/** Methode welche einen allgemeinen Status Update des Prozessors & des Systems ausgibt. 
+
+	/**
 	 * 
+	 */
+	public void executeNextCommand() {
+		String command = breg.getRegisterValue();
+		int x = command.indexOf("1");
+		System.out.println(x);
+		switch (x) {
+		case -1:
+			System.out.println("Programspeicher ist leer - Programm beendet.");
+			break;
+		case 0:
+			break;
+		default:
+			System.out.println("Fehler beim ausführen von " + command + "hat folgenden Index " + x + " generiert.");
+			break;
+		}
+	}
+	
+	/** 
+	 * Methode welche einen allgemeinen Status Update des Prozessors & des Systems ausgibt. 
 	 */
 	public void statusOutput() {
 		Converter conv = new Converter();
@@ -115,17 +155,19 @@ public class CentralProcessingUnit {
 		if (conv.binToDez(merker) < 105) {
 			merker = new Binary(16, 100, false).getBinaryValueAsStringIntern();
 		} else {
-			merker = new Binary(16, conv.binToDez(merker) - 5, false).getBinaryValueAsStringIntern();
+			merker = new Binary(16, conv.binToDez(merker) - 10, false).getBinaryValueAsStringIntern();
 		}
-		int max = conv.binToDez(merker) + 15;
-		for (int i = conv.binToDez(merker); i <= max; i++) {
-			System.out.println("     Memory " + i + ": " +ram.getMemAdressValue(new Binary(16, i, false).getBinaryValueAsStringExtern()) +
-					" ¦ " + conv.binToDez(ram.getMemAdressValue(new Binary(16, i, false).getBinaryValueAsStringIntern())));
+		int max = conv.binToDez(merker) + 30;
+		for (int i = conv.binToDez(merker); i <= max; i += 2) {
+			String out = conv.formatBinary(ram.getMemAdressValueWord(new Binary(16, i, false).getBinaryValueAsStringIntern()));
+			String mnemonic = conv.mcToMnemonic(ram.getMemAdressValueWord(new Binary(16, i, false).getBinaryValueAsStringIntern()));
+			System.out.println("     Memory " + i + "/" + (i+1) + ": " + out +
+					" ¦ " + mnemonic);
 		}
 		System.out.println("********************************************");
 		System.out.println("*************Memory 500 bis 529*************");
 		System.out.println("********************************************");
-		for (int i = 500; i < 530; i+=2) {
+		for (int i = 500; i < 530; i += 2) {
 			String out = conv.formatBinary(ram.getMemAdressValueWord(new Binary(16, i, false).getBinaryValueAsStringIntern()));
 			int value = 0;
 			if (out.charAt(0) == '1') {

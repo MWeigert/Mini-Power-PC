@@ -99,3 +99,4 @@ Informatik - Aufgabenserie 6
               - Der Befehlszähler ist nun auch ein Register.
               - GUI_OpenFileDialog implementiert. Diese lässt ein Assembler Programm auswählen.
               - Loader implementiert.
+    14.11. MW - BUGFIX: Compiler compiliert nun den Befehl NOT korrekt.

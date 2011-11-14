@@ -78,4 +78,20 @@ public class Converter {
 		}
 		return fstr;
 	}
+	
+	public String mcToMnemonic( String mcode) {
+		int x = mcode.indexOf("1");
+		int value = 0;
+		String mnemonic = "";
+		switch (x) {
+		case 0:
+			value = new Converter().kompToInt(mcode.substring(1));
+			mnemonic = "ADDD #"+ value;
+			break;
+		default:
+			System.out.println("Fehler bei der Umwandlung von " + mcode + " in Mnemonics.");
+			break;
+		}
+		return mnemonic;
+	}
 }
