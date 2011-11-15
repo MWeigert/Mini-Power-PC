@@ -27,7 +27,7 @@ public class GUI_OpenFileDialog {
 		fc.setDialogTitle("Mini-Power-PC Assembler File Loader");
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		fc.setApproveButtonText("Choose File");
-		fc.setFileFilter(new FileNameExtensionFilter("Assembler", "apm"));
+		fc.setFileFilter(new FileNameExtensionFilter("Assembler (*.apm)", "apm"));
 		int returnVal = fc.showOpenDialog(new JFrame());
 		
 		if (returnVal == JFileChooser.APPROVE_OPTION) {

@@ -86,7 +86,7 @@ public class Converter {
 	 * @return STRING mit dem Mnemonic.
 	 */
 	public String mcToMnemonic( String mcode) {
-		String mnemonic = "Speicherbereich leer";
+		String mnemonic = "99 Speicherbereich leer";
 		if (!mcode.equals("undef")){
 			int x = mcode.indexOf("1");
 			int value = 0;

@@ -4,7 +4,9 @@
  */
 package info.mini.power.pc;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
 
 /**
  * @author Mathias Weigert & Miro Ljubicic
@@ -16,6 +18,9 @@ public class MiniPowerPC {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+//		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+//		char ch;
+		
 		// TODO Auto-generated method stub
 		CentralProcessingUnit cpu = new CentralProcessingUnit();
 		cpu.statusOutput();

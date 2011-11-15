@@ -113,21 +113,216 @@ public class CentralProcessingUnit {
 	}
 
 	/**
-	 * 
+	 * Methode welche den Befehl auf welchen der Befehlscounter verweist in das Befehlsregister 
+	 * schreibt und diesen anschliessend ausführt.
+	 * Am Ende der Methode wird der Befehlscounter um 2 erhöht (sofern kein Sprung durchgeführt wurde).
 	 */
 	public void executeNextCommand() {
-		String command = breg.getRegisterValue();
-		int x = command.indexOf("1");
-		System.out.println(x);
-		switch (x) {
-		case -1:
+		boolean jump = false;
+		String sub = "";
+		String shift = "";
+		String summe ="";
+		int adr = 0;
+		breg.setRegisterValue(ram.getMemAdressValueWord(bcount.getRegisterValue()));
+		int cmd = Integer.valueOf(new Converter().mcToMnemonic(breg.getRegisterValue()).substring(0, 3));
+		switch (cmd) {
+		case 0:
+			sub = breg.getRegisterValue().substring(4, 6);
+			cbit = false;
+			if (sub.equals("00")) akku.flushRegister();
+			if (sub.equals("01")) reg1.flushRegister();
+			if (sub.equals("10")) reg2.flushRegister();
+			if (sub.equals("11")) reg3.flushRegister();
+			break;
+		case 1:
+			sub = breg.getRegisterValue().substring(4, 6);
+			if (sub.equals("01")) summe = binAddition(akku.getRegisterValue(), reg1.getRegisterValue());
+			if (sub.equals("10")) summe = binAddition(akku.getRegisterValue(), reg2.getRegisterValue());
+			if (sub.equals("11")) summe = binAddition(akku.getRegisterValue(), reg3.getRegisterValue());
+			akku.setRegisterValue(summe);
+			break;
+		case 2:
+			if (breg.getRegisterValue().charAt(1) == '0') sub = "0" + breg.getRegisterValue().substring(1);
+			else sub = "1" + breg.getRegisterValue().substring(1);
+			akku.setRegisterValue(binAddition(akku.getRegisterValue(), sub));
+			break;
+		case 3:
+			akku.setRegisterValue(binAddition(akku.getRegisterValue(), "0000000000000001"));
+			break;
+		case 4:
+			akku.setRegisterValue(binAddition(akku.getRegisterValue(), "1111111111111111"));
+			break;
+		case 5:
+			sub = breg.getRegisterValue().substring(4, 6);
+			adr = new Converter().binToDez(breg.getRegisterValue().substring(4));
+			if (sub.equals("00")) {
+				akku.setRegisterValue(ram.getMemAdressValueWord(new Binary(16, adr, false).getBinaryValueAsStringIntern()));
+			}
+			if (sub.equals("01")) {
+				reg1.setRegisterValue(ram.getMemAdressValueWord(new Binary(16, adr, false).getBinaryValueAsStringIntern()));
+			}
+			if (sub.equals("10")) {
+				reg2.setRegisterValue(ram.getMemAdressValueWord(new Binary(16, adr, false).getBinaryValueAsStringIntern()));
+			}
+			if (sub.equals("11")) {
+				reg3.setRegisterValue(ram.getMemAdressValueWord(new Binary(16, adr, false).getBinaryValueAsStringIntern()));
+			}
+			break;
+		case 6:
+			sub = breg.getRegisterValue().substring(4, 6);
+			adr = new Converter().binToDez(breg.getRegisterValue().substring(4));
+			if (sub.equals("00")) {
+				ram.setMemoryValue(new Binary(16, adr, false).getBinaryValueAsStringIntern(),
+						akku.getRegisterValue().substring(0, 8));
+				ram.setMemoryValue(new Binary(16, adr + 1, false).getBinaryValueAsStringIntern(),
+						akku.getRegisterValue().substring(8));
+			}
+			if (sub.equals("01")) {
+				ram.setMemoryValue(new Binary(16, adr, false).getBinaryValueAsStringIntern(),
+						reg1.getRegisterValue().substring(0, 8));
+				ram.setMemoryValue(new Binary(16, adr + 1, false).getBinaryValueAsStringIntern(),
+						reg1.getRegisterValue().substring(8));
+			}
+			if (sub.equals("10")) {
+				ram.setMemoryValue(new Binary(16, adr, false).getBinaryValueAsStringIntern(),
+						reg2.getRegisterValue().substring(0, 8));
+				ram.setMemoryValue(new Binary(16, adr + 1, false).getBinaryValueAsStringIntern(),
+						reg2.getRegisterValue().substring(8));
+			}
+			if (sub.equals("11")) {
+				ram.setMemoryValue(new Binary(16, adr, false).getBinaryValueAsStringIntern(),
+						reg3.getRegisterValue().substring(0, 8));
+				ram.setMemoryValue(new Binary(16, adr + 1, false).getBinaryValueAsStringIntern(),
+						reg3.getRegisterValue().substring(8));
+			}
+			break;
+		case 7:
+			
+			break;
+		case 8:
+			break;
+		case 9:
+			shift = akku.getRegisterValue();
+			if (shift.charAt(shift.length() - 1) == '1') cbit = true;
+			else cbit = false;
+			shift = "0" + shift.substring(0, shift.length() - 1);
+			akku.setRegisterValue(shift);
+			break;
+		case 10:
+			shift = akku.getRegisterValue();
+			if (shift.charAt(0) == '1') cbit = true;
+			else cbit = false;
+			shift = shift.substring(1) + "0";
+			akku.setRegisterValue(shift);
+			break;
+		case 11:
+			break;
+		case 12:
+			break;
+		case 13:
+			String inv = "";
+			for (int i = 0; i <= akku.getRegisterValue().length(); i++) {
+				if (akku.getRegisterValue().charAt(i) == '0') inv += "1";
+				else inv += "0";
+			}
+			akku.setRegisterValue(inv);
+			break;
+		case 14:
+			if (new Converter().binToDez(akku.getRegisterValue()) == 0) {
+				jump = true;
+				sub = breg.getRegisterValue().substring(4, 6);
+				if (sub.equals("01")) {
+					bcount.setRegisterValue(reg1.getRegisterValue());
+				}
+				if (sub.equals("10")) {
+					bcount.setRegisterValue(reg2.getRegisterValue());
+				}
+				if (sub.equals("11")) {
+					bcount.setRegisterValue(reg3.getRegisterValue());
+				}
+			}
+			break;
+		case 15:
+			if (new Converter().binToDez(akku.getRegisterValue()) != 0) {
+				jump = true;
+				sub = breg.getRegisterValue().substring(4, 6);
+				if (sub.equals("01")) {
+					bcount.setRegisterValue(reg1.getRegisterValue());
+				}
+				if (sub.equals("10")) {
+					bcount.setRegisterValue(reg2.getRegisterValue());
+				}
+				if (sub.equals("11")) {
+					bcount.setRegisterValue(reg3.getRegisterValue());
+				}
+			}
+			break;
+		case 16:
+			if (cbit) {
+				jump = true;
+				sub = breg.getRegisterValue().substring(4, 6);
+				if (sub.equals("01")) {
+					bcount.setRegisterValue(reg1.getRegisterValue());
+				}
+				if (sub.equals("10")) {
+					bcount.setRegisterValue(reg2.getRegisterValue());
+				}
+				if (sub.equals("11")) {
+					bcount.setRegisterValue(reg3.getRegisterValue());
+				}
+			}
+			break;
+		case 17:
+			jump = true;
+				sub = breg.getRegisterValue().substring(4, 6);
+				if (sub.equals("01")) {
+					bcount.setRegisterValue(reg1.getRegisterValue());
+				}
+				if (sub.equals("10")) {
+					bcount.setRegisterValue(reg2.getRegisterValue());
+				}
+				if (sub.equals("11")) {
+					bcount.setRegisterValue(reg3.getRegisterValue());
+				}
+				break;
+		case 18:
+			//Kontrollieren kann falsch sein...
+			if (new Converter().binToDez(akku.getRegisterValue()) == 0) {
+				jump = true;
+				adr = new Converter().binToDez(breg.getRegisterValue().substring(6));
+				bcount.setRegisterValue(new Binary(16, adr,	false).getBinaryValueAsStringIntern());
+			}
+			break;
+		case 19:
+			if (new Converter().binToDez(akku.getRegisterValue()) != 0) {
+				jump = true;
+				adr = new Converter().binToDez(breg.getRegisterValue().substring(6));
+				bcount.setRegisterValue(new Binary(16, adr,	false).getBinaryValueAsStringIntern());
+			}
+			break;
+		case 20:
+			if (cbit) {
+				jump = true;
+				adr = new Converter().binToDez(breg.getRegisterValue().substring(6));
+				bcount.setRegisterValue(new Binary(16, adr,	false).getBinaryValueAsStringIntern());
+			}
+			break;
+		case 21:
+			jump = true;
+			adr = new Converter().binToDez(breg.getRegisterValue().substring(6));
+			bcount.setRegisterValue(new Binary(16, adr,	false).getBinaryValueAsStringIntern());
+			break;
+		case 99:
 			System.out.println("Programspeicher ist leer - Programm beendet.");
 			break;
-		case 0:
-			break;
 		default:
-			System.out.println("Fehler beim ausführen von " + command + "hat folgenden Index " + x + " generiert.");
+			System.out.println("Fehler bei der Programm Verarbeitung.");
 			break;
+		}
+		if (!jump) {
+			adr = new Converter().binToDez(bcount.getRegisterValue());
+			adr += 2;
+			bcount.setRegisterValue(new Binary(16, adr, false).getBinaryValueAsStringIntern());
 		}
 	}
 	
@@ -176,5 +371,51 @@ public class CentralProcessingUnit {
 			System.out.println("     Memory "+ i + "/" + (i+1) + ": " + out +
 					" ¦ " +	value);
 		}
+	}
+	
+	/**
+	 * Methode welche zwei Binäre Zahlen (welche als String übergeben werden) addiert
+	 * und einen String mit dem binären Ergebnis zurückliefert. 
+	 * @param a String mit dem ersten Summanden
+	 * @param b String mit dem zweiten Summanden
+	 * @return
+	 */
+	public String binAddition(String a, String b) {
+		String summe = "";
+		String invers = "";
+		boolean merker = false;
+		for (int i = a.length() - 1; i > 0; i--) {
+			if (a.charAt(i) == b.charAt(i)) {
+				if (merker) {
+					if (a.charAt(i) == '0') {
+						summe += "1";
+						merker = false;
+					} else {
+						summe += "1";
+						merker = true;
+					}
+				} else {
+					if (a.charAt(i) == '0') {
+						summe += "0";
+					} else {
+						summe += "0";
+						merker = true;
+					}
+				}
+			} else {
+				if (merker) {
+					summe += "0";
+					merker = true;
+				} else {
+					summe += "1";
+				}
+			}
+		}
+		for (int i = summe.length() - 1; i > 0; i--) {
+			invers += summe.charAt(i);
+		}
+		if (merker) cbit = true;
+		else cbit = false;
+		return invers;
 	}
 }
