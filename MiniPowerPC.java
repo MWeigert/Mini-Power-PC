@@ -6,6 +6,7 @@ package info.mini.power.pc;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
@@ -18,7 +19,9 @@ public class MiniPowerPC {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-//		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		boolean run = true;
+		String keypressed = "";
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 //		char ch;
 		
 		// TODO Auto-generated method stub
@@ -38,6 +41,21 @@ public class MiniPowerPC {
 		cpu.waitForUserInput();
 		cpu.increaseCounter();
 		cpu.statusOutput();
+		while (run) {
+			cpu.executeNextCommand();
+			cpu.increaseCounter();
+			cpu.statusOutput();
+			if (new Converter().binToDez(cpu.getRAMadressValueWord(cpu.getBcountAsString())) == 0) run = false;
+			System.out.println("Bitte Enter drücken um mit der ausführung fortzufahren.");
+			try {
+				keypressed = reader.readLine();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		cpu.statusOutput();
+		System.out.println("---------- Assembler Programm abgearbeitet! ----------");
 	}
 
 }

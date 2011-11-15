@@ -111,6 +111,15 @@ public class CentralProcessingUnit {
 		UserInput uinput = new UserInput();
 		ram = uinput.userInput(ram);
 	}
+	
+	/**
+	 * Methode welche den inhalt eines Wortes im Speicher liefert.
+	 * @param adr String Speicheradresse welche ausgelesen werden soll.
+	 * @return String mit dem Wort an der übergebenen Adresse.
+	 */
+	public String getRAMadressValueWord(String adr) {
+		return ram.getMemAdressValueWord(adr);
+	}
 
 	/**
 	 * Methode welche den Befehl auf welchen der Befehlscounter verweist in das Befehlsregister 
@@ -124,7 +133,7 @@ public class CentralProcessingUnit {
 		String summe ="";
 		int adr = 0;
 		breg.setRegisterValue(ram.getMemAdressValueWord(bcount.getRegisterValue()));
-		int cmd = Integer.valueOf(new Converter().mcToMnemonic(breg.getRegisterValue()).substring(0, 3));
+		int cmd = Integer.valueOf(new Converter().mcToMnemonic(breg.getRegisterValue()).substring(0, 2));
 		switch (cmd) {
 		case 0:
 			sub = breg.getRegisterValue().substring(4, 6);
