@@ -16,6 +16,10 @@ public class Converter {
 	 * @return Integer welcher den umgerechneten Wert des Eingabe Strings enthält.
 	 */
 	public int binToDez (String str) {
+		while (str.contains(" ")) {
+			int x = str.indexOf(" ");
+			str = str.substring(0, x) + str.substring(x + 1);
+		}
 		int val = 0;
 		if (str != null && !str.equals("undef")) {
 			int max = str.length() - 1;

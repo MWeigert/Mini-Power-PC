@@ -22,7 +22,13 @@ public class MiniPowerPC {
 		boolean run = true;
 		String keypressed = "";
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-//		char ch;
+//		System.out.println("Wählen Sie den Ausgabemodus: (a) Schneller (b) Slow (c) Step");
+//		try {
+//			keypressed = reader.readLine();
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 		
 		// TODO Auto-generated method stub
 		CentralProcessingUnit cpu = new CentralProcessingUnit();
@@ -46,13 +52,13 @@ public class MiniPowerPC {
 			cpu.increaseCounter();
 			cpu.statusOutput();
 			if (new Converter().binToDez(cpu.getRAMadressValueWord(cpu.getBcountAsString())) == 0) run = false;
-			System.out.println("Bitte Enter drücken um mit der ausführung fortzufahren.");
-			try {
-				keypressed = reader.readLine();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			System.out.println("Bitte Enter drücken um mit der ausführung fortzufahren.");
+//			try {
+//				keypressed = reader.readLine();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 		}
 		cpu.statusOutput();
 		System.out.println("---------- Assembler Programm abgearbeitet! ----------");

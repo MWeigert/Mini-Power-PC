@@ -38,7 +38,7 @@ public class AssemblerCompiler {
 			if (mne.startsWith("BC")) mcode = "0001" + mne.substring(3) + "1100000000";
 			if (mne.startsWith("BD")) {
 				Binary bin = new Binary(16, Integer.valueOf(mne.substring(4)), false);
-				mcode = "001000" + bin.getBinaryValueAsStringExtern().substring(6);
+				mcode = "001000" + bin.getBinaryValueAsStringIntern().substring(6);
 			}
 			break;
 		case 3:

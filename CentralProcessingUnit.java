@@ -135,6 +135,7 @@ public class CentralProcessingUnit {
 		breg.setRegisterValue(ram.getMemAdressValueWord(bcount.getRegisterValue()));
 		int cmd = Integer.valueOf(new Converter().mcToMnemonic(breg.getRegisterValue()).substring(0, 2));
 		switch (cmd) {
+		// CLR Rnr
 		case 0:
 			sub = breg.getRegisterValue().substring(4, 6);
 			cbit = false;
@@ -143,6 +144,7 @@ public class CentralProcessingUnit {
 			if (sub.equals("10")) reg2.flushRegister();
 			if (sub.equals("11")) reg3.flushRegister();
 			break;
+		// ADD Rnr
 		case 1:
 			sub = breg.getRegisterValue().substring(4, 6);
 			if (sub.equals("01")) summe = binAddition(akku.getRegisterValue(), reg1.getRegisterValue());
@@ -150,20 +152,25 @@ public class CentralProcessingUnit {
 			if (sub.equals("11")) summe = binAddition(akku.getRegisterValue(), reg3.getRegisterValue());
 			akku.setRegisterValue(summe);
 			break;
+		// ADDD #Zahl
 		case 2:
 			if (breg.getRegisterValue().charAt(1) == '0') sub = "0" + breg.getRegisterValue().substring(1);
 			else sub = "1" + breg.getRegisterValue().substring(1);
 			akku.setRegisterValue(binAddition(akku.getRegisterValue(), sub));
 			break;
+		// INC
 		case 3:
 			akku.setRegisterValue(binAddition(akku.getRegisterValue(), "0000000000000001"));
 			break;
+		// DEC
 		case 4:
 			akku.setRegisterValue(binAddition(akku.getRegisterValue(), "1111111111111111"));
 			break;
+		// LWDD Rnr, #Adr
 		case 5:
 			sub = breg.getRegisterValue().substring(4, 6);
-			adr = new Converter().binToDez(breg.getRegisterValue().substring(4));
+			adr = new Converter().binToDez(breg.getRegisterValue().substring(6));
+			System.out.println("Sub: " + sub + " Adr: " + adr);
 			if (sub.equals("00")) {
 				akku.setRegisterValue(ram.getMemAdressValueWord(new Binary(16, adr, false).getBinaryValueAsStringIntern()));
 			}
@@ -177,6 +184,7 @@ public class CentralProcessingUnit {
 				reg3.setRegisterValue(ram.getMemAdressValueWord(new Binary(16, adr, false).getBinaryValueAsStringIntern()));
 			}
 			break;
+		// SWDD Rnr, #Adr
 		case 6:
 			sub = breg.getRegisterValue().substring(4, 6);
 			adr = new Converter().binToDez(breg.getRegisterValue().substring(4));
@@ -205,11 +213,14 @@ public class CentralProcessingUnit {
 						reg3.getRegisterValue().substring(8));
 			}
 			break;
+		// SRA
 		case 7:
 			
 			break;
+		// SLA
 		case 8:
 			break;
+		// SRL
 		case 9:
 			shift = akku.getRegisterValue();
 			if (shift.charAt(shift.length() - 1) == '1') cbit = true;
@@ -217,6 +228,7 @@ public class CentralProcessingUnit {
 			shift = "0" + shift.substring(0, shift.length() - 1);
 			akku.setRegisterValue(shift);
 			break;
+		// SLL
 		case 10:
 			shift = akku.getRegisterValue();
 			if (shift.charAt(0) == '1') cbit = true;
@@ -224,18 +236,22 @@ public class CentralProcessingUnit {
 			shift = shift.substring(1) + "0";
 			akku.setRegisterValue(shift);
 			break;
+		// AND Rnr
 		case 11:
 			break;
+		// OR Rnr
 		case 12:
 			break;
+		// NOT
 		case 13:
 			String inv = "";
-			for (int i = 0; i <= akku.getRegisterValue().length(); i++) {
+			for (int i = 0; i <= akku.getRegisterValue().length() -1 ; i++) {
 				if (akku.getRegisterValue().charAt(i) == '0') inv += "1";
 				else inv += "0";
 			}
 			akku.setRegisterValue(inv);
 			break;
+		// BZ Rnr
 		case 14:
 			if (new Converter().binToDez(akku.getRegisterValue()) == 0) {
 				jump = true;
@@ -251,6 +267,7 @@ public class CentralProcessingUnit {
 				}
 			}
 			break;
+		// BNZ Rnr
 		case 15:
 			if (new Converter().binToDez(akku.getRegisterValue()) != 0) {
 				jump = true;
@@ -266,6 +283,7 @@ public class CentralProcessingUnit {
 				}
 			}
 			break;
+		// BC Rnr
 		case 16:
 			if (cbit) {
 				jump = true;
@@ -281,6 +299,7 @@ public class CentralProcessingUnit {
 				}
 			}
 			break;
+		// B Rnr
 		case 17:
 			jump = true;
 				sub = breg.getRegisterValue().substring(4, 6);
@@ -294,6 +313,7 @@ public class CentralProcessingUnit {
 					bcount.setRegisterValue(reg3.getRegisterValue());
 				}
 				break;
+		// BZD #Adr
 		case 18:
 			//Kontrollieren kann falsch sein...
 			if (new Converter().binToDez(akku.getRegisterValue()) == 0) {
@@ -302,6 +322,7 @@ public class CentralProcessingUnit {
 				bcount.setRegisterValue(new Binary(16, adr,	false).getBinaryValueAsStringIntern());
 			}
 			break;
+		// BNZD #Adr
 		case 19:
 			if (new Converter().binToDez(akku.getRegisterValue()) != 0) {
 				jump = true;
@@ -309,6 +330,7 @@ public class CentralProcessingUnit {
 				bcount.setRegisterValue(new Binary(16, adr,	false).getBinaryValueAsStringIntern());
 			}
 			break;
+		// BCD #Adr
 		case 20:
 			if (cbit) {
 				jump = true;
@@ -316,14 +338,17 @@ public class CentralProcessingUnit {
 				bcount.setRegisterValue(new Binary(16, adr,	false).getBinaryValueAsStringIntern());
 			}
 			break;
+		// BD #Adr
 		case 21:
 			jump = true;
 			adr = new Converter().binToDez(breg.getRegisterValue().substring(6));
 			bcount.setRegisterValue(new Binary(16, adr,	false).getBinaryValueAsStringIntern());
 			break;
+		// Programm Ende
 		case 99:
 			System.out.println("Programspeicher ist leer - Programm beendet.");
 			break;
+		// Fehler bei der Befehlsverarbeitung
 		default:
 			System.out.println("Fehler bei der Programm Verarbeitung.");
 			break;
@@ -344,7 +369,7 @@ public class CentralProcessingUnit {
 		System.out.println("************ CPU Systemstatus **************");
 		System.out.println("                 Step: " + counter);
 		System.out.println("********************************************");
-		System.out.println("Befehlsregister: " + breg.getRegisterValueExtern() + " ¦ " + conv.binToDez(breg.getRegisterValue()));
+		System.out.println("Befehlsregister: " + breg.getRegisterValueExtern() + " ¦ " + conv.mcToMnemonic(breg.getRegisterValue()));
 		System.out.println("    Akkumulator: " + akku.getRegisterValueExtern() + " ¦ " + conv.binToDez(akku.getRegisterValue()));
 		System.out.println("     Register 1: " + reg1.getRegisterValueExtern() + " ¦ " + conv.binToDez(reg1.getRegisterValue()));
 		System.out.println("     Register 2: " + reg2.getRegisterValueExtern() + " ¦ " + conv.binToDez(reg2.getRegisterValue()));
@@ -356,7 +381,7 @@ public class CentralProcessingUnit {
 		System.out.println("***************Befehlsspeicher**************");
 		System.out.println("********************************************");
 		String merker = getBcountAsString();
-		if (conv.binToDez(merker) < 105) {
+		if (conv.binToDez(merker) < 110) {
 			merker = new Binary(16, 100, false).getBinaryValueAsStringIntern();
 		} else {
 			merker = new Binary(16, conv.binToDez(merker) - 10, false).getBinaryValueAsStringIntern();
@@ -393,7 +418,7 @@ public class CentralProcessingUnit {
 		String summe = "";
 		String invers = "";
 		boolean merker = false;
-		for (int i = a.length() - 1; i > 0; i--) {
+		for (int i = a.length() - 1; i >= 0; i--) {
 			if (a.charAt(i) == b.charAt(i)) {
 				if (merker) {
 					if (a.charAt(i) == '0') {
@@ -420,7 +445,7 @@ public class CentralProcessingUnit {
 				}
 			}
 		}
-		for (int i = summe.length() - 1; i > 0; i--) {
+		for (int i = summe.length() - 1; i >= 0; i--) {
 			invers += summe.charAt(i);
 		}
 		if (merker) cbit = true;
